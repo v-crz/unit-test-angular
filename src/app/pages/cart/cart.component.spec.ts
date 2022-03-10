@@ -13,19 +13,22 @@ describe('Cart component', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                // Módulos necesarios
                 HttpClientTestingModule
             ],
             declarations: [
+                // Componentes necesarios
                 CartComponent
             ],
             providers: [
+                // Servicios necesarios
                 BookService
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA,
                 NO_ERRORS_SCHEMA
             ]
-        });
+        }).compileComponents();
     });
 
     beforeEach(() => {
@@ -35,5 +38,13 @@ describe('Cart component', () => {
 
         // Componente entrará al método onInit
         fixture.detectChanges();
+    });
+
+    // Test: componente se haya creado correctamente
+    it('Should create', () => {
+        expect(component).toBeTruthy();
+
+        // Test fail
+        // expect(component).toBeFalse();
     });
 });
