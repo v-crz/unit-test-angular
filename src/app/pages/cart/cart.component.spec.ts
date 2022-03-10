@@ -23,6 +23,10 @@ describe('Cart component', () => {
             providers: [
                 // Servicios necesarios
                 BookService
+                // No son necesarios estos servicios, porque realizan peticiones reales.
+                // En su lugar se importa HttpClientTestingModule
+                // HttpClient,
+                // HttpHandler
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA,
