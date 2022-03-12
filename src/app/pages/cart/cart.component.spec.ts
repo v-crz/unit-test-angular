@@ -142,4 +142,32 @@ describe('Cart component', () => {
         expect(spy1).toHaveBeenCalled();
         expect(spy2).toHaveBeenCalled();
     });
+
+    // Prueba recomendada para métodos privados
+    it('onClearBooks works correctly', () => {
+        // Método se va a llamar y además espiar
+        const spy1 = spyOn((component as any), '_clearListCartBook').and.callThrough();
+        
+        // Espiar y anular lo que haga el servicio
+        const spy2 = spyOn(service, 'removeBooksFromCart').and.callFake(() => null);
+
+        component.listCartBook = listBook;
+        component.onClearBooks();
+        expect(component.listCartBook.length).toBe(0);
+        // expect(component.listCartBook.length === 0).toBeTrue();
+        expect(spy1).toHaveBeenCalled();
+        expect(spy2).toHaveBeenCalled();
+    });
+
+    // Prueba no recomendada para métodos privados
+    it('_clearListCartBook works correctly', () => {
+        const spy1 = spyOn(service, 'removeBooksFromCart').and.callFake(() => null);
+
+        // No recomendado
+        component.listCartBook = listBook;
+        component['_clearListCartBook']();
+
+        expect(component.listCartBook.length).toBe(0);
+        expect(spy1).toHaveBeenCalled();
+    });
 });
