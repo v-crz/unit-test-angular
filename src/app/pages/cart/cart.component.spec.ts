@@ -70,6 +70,9 @@ describe('Cart component', () => {
 
         // Instanciar servicio
         service = fixture.debugElement.injector.get(BookService);
+
+        // No se llama al servicio
+        spyOn(service, 'getBooksFromCart').and.callFake(() => listBook);
     });
 
     // Test: componente se haya creado correctamente
