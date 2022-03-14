@@ -83,7 +83,7 @@ describe('Cart component', () => {
         // expect(component).toBeFalse();
     });
 
-    it('getTotalPrice returns an amount', () => {
+    fit('getTotalPrice returns an amount', () => {
         const totalPrice = component.getTotalPrice(listBook);
         expect(totalPrice).toBeGreaterThan(0);
         expect(totalPrice).not.toBe(0);

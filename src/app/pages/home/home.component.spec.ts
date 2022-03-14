@@ -79,7 +79,7 @@ describe('Home component', () => {
     //     });
     //   }
 
-    it('getBooks get books from the susbcription', () => {
+    fit('getBooks get books from the susbcription', () => {
         // Traer el servicio
         const bookService = fixture.debugElement.injector.get(BookService);
 
