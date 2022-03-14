@@ -28,7 +28,11 @@ const listBook: Array<Book> = [
         price: 8,
         amount: 7
     }
-]
+];
+
+const bookServiceMock = {
+    getBooks: () => of(listBook)
+};
 
 describe('Home component', () => {
     let component: HomeComponent;
@@ -43,7 +47,13 @@ describe('Home component', () => {
                 HomeComponent
             ],
             providers: [
-                BookService
+                // BookService
+                {
+                    // Cuando el componente necesite el servicio BookService
+                    // realmente utilizará el valor de useValue
+                    provide: BookService,
+                    useValue: bookServiceMock
+                }
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA, 
@@ -76,11 +86,11 @@ describe('Home component', () => {
         // const listBook: Array<Book> = [];
         
         // Retorna un observable. Uso de of
-        const spy1 = spyOn(bookService, 'getBooks').and.returnValue(of(listBook));
+        // const spy1 = spyOn(bookService, 'getBooks').and.returnValue(of(listBook));
 
         component.getBooks();
 
-        expect(spy1).toHaveBeenCalled();
+        // expect(spy1).toHaveBeenCalled();
         expect(component.listBook.length).toBe(3);
     });
 });
