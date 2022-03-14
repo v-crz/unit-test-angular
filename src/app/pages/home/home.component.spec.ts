@@ -34,7 +34,7 @@ const bookServiceMock = {
     getBooks: () => of(listBook)
 };
 
-fdescribe('Home component', () => {
+describe('Home component', () => {
     let component: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;
 
@@ -79,7 +79,7 @@ fdescribe('Home component', () => {
     //     });
     //   }
 
-    it('getBooks get books from the susbcription', () => {
+    xit('getBooks get books from the susbcription', () => {
         // Traer el servicio
         const bookService = fixture.debugElement.injector.get(BookService);
 
