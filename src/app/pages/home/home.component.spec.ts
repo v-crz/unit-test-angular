@@ -68,6 +68,21 @@ describe('Home component', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
+    
+    // Se ejecuta al inicio de todo
+    beforeAll(() => {
+
+    });
+
+    // Se ejecuta después de cada test
+    afterEach(() => {
+
+    });
+
+    // Se ejecuta despues de finalizar todos los test
+    afterAll(() => {
+
+    });
 
     it('Should create', () => {
         expect(component).toBeTruthy();
