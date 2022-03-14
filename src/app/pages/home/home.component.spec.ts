@@ -34,7 +34,7 @@ const bookServiceMock = {
     getBooks: () => of(listBook)
 };
 
-xdescribe('Home component', () => {
+describe('Home component', () => {
     let component: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;
 
