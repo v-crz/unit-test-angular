@@ -29,10 +29,11 @@ const listBook: Array<Book> = [
     }
 ];
 
-describe('BookService', () => {
+fdescribe('BookService', () => {
     let service: BookService;
     // Para hacer peticiones mock, no reales
     let httpMock: HttpTestingController;
+    let storage =  {};
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -53,6 +54,11 @@ describe('BookService', () => {
     beforeEach(() => {
         service = TestBed.inject(BookService);
         httpMock = TestBed.inject(HttpTestingController);
+
+        // Simulando método
+        spyOn(localStorage, 'getItem').and.callFake((key: string) => {
+            return storage[key] ? storage[key] : null;
+        });
     });
 
     afterEach(() => {
@@ -64,6 +70,7 @@ describe('BookService', () => {
         expect(service).toBeTruthy();
     });
 
+    // Metodo que conecta con una API
     it('getBook returns a list of books and does a get method', () => {
         // suscribirse al metodo del servicio
         service.getBooks().subscribe((resp: Array<Book>) => {
@@ -77,5 +84,21 @@ describe('BookService', () => {
         // Simular que la petición se ha hecho y retorne listBook
         // se ejecutará el subscribe de la línea 69
         req.flush(listBook);
+    });
+
+    // public getBooksFromCart(): Book[] {
+    //     let listBook: Book[] = JSON.parse(localStorage.getItem('listCartBook'));
+    //     if (listBook === null) {
+    //       listBook = [];
+    //     }
+    //     return listBook;
+    //   }
+
+    it('getBooksFromCart return empty array when localStorage is empty', () => {
+        const listBook = service.getBooksFromCart();
+        expect(listBook.length).toBe(0);
+
+        // Crear spy para no entrar al localStorage real del navegador
+        // Se crea en el beforeEach
     });
 });
