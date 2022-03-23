@@ -138,4 +138,14 @@ describe('BookService', () => {
 
         expect(spy1).toHaveBeenCalled();
     });
+
+    it('removeBooksFromCart removes the list from the localStorage', () => {
+        service.addBookToCart(book);
+        let listBook = service.getBooksFromCart();
+        expect(listBook.length).toBe(1);
+
+        service.removeBooksFromCart();
+        listBook = service.getBooksFromCart();
+        expect(listBook.length).toBe(0);
+    });
 });
