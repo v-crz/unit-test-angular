@@ -4,6 +4,8 @@ import { TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Book } from '../models/book.model';
 import { environment } from '../../environments/environment.prod';
+import { stringify } from 'querystring';
+import swal from 'sweetalert2';
 
 const listBook: Array<Book> = [
     {
@@ -29,7 +31,15 @@ const listBook: Array<Book> = [
     }
 ];
 
-fdescribe('BookService', () => {
+const book: Book = {
+    name: '',
+    author: '',
+    isbn: '',
+    price: 15,
+    amount: 2
+};
+
+describe('BookService', () => {
     let service: BookService;
     // Para hacer peticiones mock, no reales
     let httpMock: HttpTestingController;
@@ -55,10 +65,17 @@ fdescribe('BookService', () => {
         service = TestBed.inject(BookService);
         httpMock = TestBed.inject(HttpTestingController);
 
+        // Resetear storage, para que en cada test se tenga un storage limpio
+        storage = {};
+
         // Simulando método
         spyOn(localStorage, 'getItem').and.callFake((key: string) => {
             return storage[key] ? storage[key] : null;
         });
+
+        spyOn(localStorage, 'setItem').and.callFake((key: string, value: string) => {
+            return storage[key] = value;
+        })
     });
 
     afterEach(() => {
@@ -100,5 +117,25 @@ fdescribe('BookService', () => {
 
         // Crear spy para no entrar al localStorage real del navegador
         // Se crea en el beforeEach
+    });
+
+    it('addBookToCart add a book successfully when the list does not exist in the localStorage', () => {
+        const toast = {
+            fire: () => null
+        } as any;
+
+        const spy1 = spyOn(swal, 'mixin').and.callFake(() => {
+            return toast;
+        });
+
+        let listBook = service.getBooksFromCart();
+        expect(listBook.length).toBe(0);
+
+        service.addBookToCart(book);
+
+        listBook = service.getBooksFromCart();
+        expect(listBook.length).toBe(1);
+
+        expect(spy1).toHaveBeenCalled();
     });
 });
