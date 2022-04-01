@@ -84,7 +84,7 @@ describe('Cart component', () => {
     //     // expect(component).toBeFalse();
     // });
 
-    fit('Should create', inject([CartComponent], (testComponent: CartComponent) => {
+    it('Should create', inject([CartComponent], (testComponent: CartComponent) => {
         expect(testComponent).toBeTruthy();
     }));
 
