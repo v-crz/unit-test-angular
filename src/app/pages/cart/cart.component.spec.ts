@@ -1,5 +1,5 @@
 import { CartComponent } from "src/app/pages/cart/cart.component";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, inject, TestBed } from "@angular/core/testing";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { BookService } from '../../services/book.service';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
@@ -43,11 +43,12 @@ describe('Cart component', () => {
             ],
             declarations: [
                 // Componentes necesarios
-                CartComponent
+                // CartComponent
             ],
             providers: [
                 // Servicios necesarios
-                BookService
+                BookService,
+                CartComponent
                 // No son necesarios estos servicios, porque realizan peticiones reales.
                 // En su lugar se importa HttpClientTestingModule
                 // HttpClient,
@@ -75,13 +76,17 @@ describe('Cart component', () => {
         spyOn(service, 'getBooksFromCart').and.callFake(() => listBook);
     });
 
-    // Test: componente se haya creado correctamente
-    it('Should create', () => {
-        expect(component).toBeTruthy();
+    // // Test: componente se haya creado correctamente
+    // it('Should create', () => {
+    //     expect(component).toBeTruthy();
 
-        // Test fail
-        // expect(component).toBeFalse();
-    });
+    //     // Test fail
+    //     // expect(component).toBeFalse();
+    // });
+
+    fit('Should create', inject([CartComponent], (testComponent: CartComponent) => {
+        expect(testComponent).toBeTruthy();
+    }));
 
     it('getTotalPrice returns an amount', () => {
         const totalPrice = component.getTotalPrice(listBook);
